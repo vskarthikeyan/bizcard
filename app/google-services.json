@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "95558522084",
+    "project_id": "demoprojecttesting-1909d",
+    "storage_bucket": "demoprojecttesting-1909d.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:95558522084:android:8448facd3e9d87ae3608f1",
+        "android_client_info": {
+          "package_name": "com.example.jetbizcard"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAeQ0aX7G8k-_gWv-UBS6ohSXRcymRRbvQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
