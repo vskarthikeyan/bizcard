@@ -15,8 +15,8 @@ RUN mkdir -p $ANDROID_SDK_ROOT/cmdline-tools && \
     yes | $ANDROID_SDK_ROOT/cmdline-tools/latest/bin/sdkmanager --licenses && \
     yes | $ANDROID_SDK_ROOT/cmdline-tools/latest/bin/sdkmanager \
         "platform-tools" \
-        "platforms;android-34" \
-        "build-tools;34.0.0"
+        "platforms;android-35" \
+        "build-tools;35.0.0"
 
 # (OPTIONAL) Skip Gradle install; use ./gradlew instead
 # If you insist on manual install, match version in gradle-wrapper.properties:
