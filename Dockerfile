@@ -25,3 +25,5 @@ RUN mkdir -p $ANDROID_SDK_ROOT/cmdline-tools && \
 #     ln -s /opt/gradle-8.11.1/bin/gradle /usr/bin/gradle
 
 WORKDIR /app
+# Fix permission for Jenkins Docker agent (non-root user support)
+RUN chmod -R a+rwx /opt/android-sdk
