@@ -1,27 +1,29 @@
 FROM openjdk:17-jdk-slim
 
-# Install required packages
+ENV DEBIAN_FRONTEND=noninteractive
+ENV ANDROID_SDK_ROOT /opt/android-sdk
+ENV PATH $PATH:$ANDROID_SDK_ROOT/emulator:$ANDROID_SDK_ROOT/platform-tools:$ANDROID_SDK_ROOT/cmdline-tools/latest/bin
+
+# Install dependencies
 RUN apt-get update && apt-get install -y curl unzip git wget
 
-# Android SDK variables
-ENV ANDROID_SDK_ROOT /opt/android-sdk
-ENV PATH $PATH:$ANDROID_SDK_ROOT/emulator:$ANDROID_SDK_ROOT/tools:$ANDROID_SDK_ROOT/tools/bin:$ANDROID_SDK_ROOT/platform-tools
-
-# Install SDK
-RUN mkdir -p $ANDROID_SDK_ROOT && \
-    cd $ANDROID_SDK_ROOT && \
+# Install Android SDK
+RUN mkdir -p $ANDROID_SDK_ROOT/cmdline-tools && \
     curl -o sdk.zip https://dl.google.com/android/repository/commandlinetools-linux-9477386_latest.zip && \
-    unzip sdk.zip -d cmdline-tools && \
-    mv cmdline-tools cmdline-tools/latest && \
-    yes | cmdline-tools/latest/bin/sdkmanager --sdk_root=$ANDROID_SDK_ROOT \
-      "platform-tools" \
-      "platforms;android-34" \
-      "build-tools;34.0.0" \
-      "cmdline-tools;latest"
+    unzip sdk.zip -d $ANDROID_SDK_ROOT/cmdline-tools && \
+    mv $ANDROID_SDK_ROOT/cmdline-tools/cmdline-tools $ANDROID_SDK_ROOT/cmdline-tools/latest && \
+    yes | $ANDROID_SDK_ROOT/cmdline-tools/latest/bin/sdkmanager --sdk_root=$ANDROID_SDK_ROOT \
+        "platform-tools" \
+        "platforms;android-34" \
+        "build-tools;34.0.0" && \
+    yes | $ANDROID_SDK_ROOT/cmdline-tools/latest/bin/sdkmanager --licenses
 
-# Install Gradle
-RUN wget https://services.gradle.org/distributions/gradle-8.4-bin.zip && \
-    unzip gradle-8.4-bin.zip -d /opt && \
-    ln -s /opt/gradle-8.4/bin/gradle /usr/bin/gradle
+# Install Gradle 8.11.1
+RUN wget https://services.gradle.org/distributions/gradle-8.11.1-bin.zip && \
+    unzip gradle-8.11.1-bin.zip -d /opt && \
+    ln -s /opt/gradle-8.11.1/bin/gradle /usr/bin/gradle
+ENV GRADLE_HOME=/opt/gradle-8.11.1
+
+ENV PATH=$PATH:$GRADLE_HOME/bin
 
 WORKDIR /app
